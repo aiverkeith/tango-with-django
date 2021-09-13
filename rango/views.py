@@ -13,5 +13,12 @@ def index(request):
 
 
 def about(request):
-    print(request)
-    return HttpResponse("Rango says here is the about page")
+    return render(
+        request,
+        'rango/about.html',
+        context={
+            "my_name": "Aiver",
+            "MEDIA_URL": "/media/cat.jpg"
+        }
+    )
+    # return HttpResponse("Rango says here is the about page")

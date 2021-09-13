@@ -4,4 +4,14 @@ from django.http import HttpResponse
 
 
 def index(request):
-    return HttpResponse("Rango says hey")
+    context_dict = {
+        "bold_message": "Cupcake",
+    }
+
+    return render(request, 'rango/index.html', context=context_dict)
+    # return HttpResponse("Rango says hey")
+
+
+def about(request):
+    print(request)
+    return HttpResponse("Rango says here is the about page")

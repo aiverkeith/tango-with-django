@@ -7,18 +7,21 @@ from rango.models import Page
 
 
 def index(request):
-    category_list = Category.objects.order_by('-likes')[:5]
     context_dict = {
-        'bold_message': 'Cruncy, creamy, cookie, candy, cupcake!',
-        'categories': category_list,
+        'boldmessage': 'Crunchy, creamy, cookie, candy, cupcake!',
     }
 
     try:
-        top_five_pages = Page.objects.order_by('-views')[:5]
-        print('top_five_pages', top_five_pages)
-        context_dict['top_five_pages'] = top_five_pages
+        categories = Category.objects.order_by('-views')[:5]
+        context_dict['categories'] = categories
     except Page.DoesNotExist:
-        context_dict['top_five_pages'] = None
+        context_dict['categories'] = None
+
+    try:
+        pages = Page.objects.order_by('-views')[:5]
+        context_dict['pages'] = pages
+    except Page.DoesNotExist:
+        context_dict['pages'] = None
 
     return render(request, 'rango/index.html', context_dict)
     # return HttpResponse("Rango says hey")

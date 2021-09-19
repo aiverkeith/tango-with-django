@@ -37,7 +37,7 @@ def about(request):
         'rango/about.html',
         context={
             "my_name": "Aiver",
-            "MEDIA_URL": "/media/cat.jpg"
+            # "MEDIA_URL": "/media/cat.jpg"
         }
     )
     # return HttpResponse("Rango says here is the about page")

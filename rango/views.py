@@ -6,6 +6,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 
 from rango.forms import CategoryForm, PageForm
+from rango.google_search import run_query
 from rango.models import Category, Page
 
 
@@ -134,3 +135,15 @@ def get_server_side_cookie(request, cookie, default_val=None):
         val = default_val
 
     return val
+
+
+def search(request):
+    context_dict = {}
+
+    if request.method == 'POST':
+        query = request.POST['query'].strip()
+        if query:
+            context_dict['query'] = query
+            context_dict['result_list'] = run_query(query)
+
+    return render(request, 'rango/search.html', context_dict)

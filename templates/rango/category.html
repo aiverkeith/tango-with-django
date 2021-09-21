@@ -12,13 +12,17 @@
 
 {% block body_block %}
   {% if category %}
-    <h1>{{ category.name }}</h1>
+    <div class="jumbotron p-4">
+        <div class="container">
+            <h1 class="jumbotron-heading">{{ category.name }}</h1>
+        </div>
+    </div>
 
     {% if pages %}
       <ul>
-      {% for page in pages %}
-        <li><a href="{{ page.url }}">{{ page.title }}</a></li>
-      {% endfor %}
+        {% for page in pages %}
+          <li><a href="{{ page.url }}">{{ page.title }}</a></li>
+          {% endfor %}
       </ul>
     {% else %}
       <strong>No pages currently in category.</strong>

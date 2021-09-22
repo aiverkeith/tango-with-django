@@ -30,10 +30,10 @@
     {% for result in result_list %}
         <div class="list-group-item">
             <h3 class="list-group-item-heading">
-                <a href="{{ result.link }}">{{ result.title|safe|escape }}</a>
+                <a href="{{ result.link }}">{{ result.title }}</a>
             </h3>
             <p class="list-group-item-text">
-                {{ result.summary|safe|escape }}
+                {{ result.summary }}
             </p>
         </div>
     {% endfor %}

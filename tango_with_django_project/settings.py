@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
+import environ
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -19,21 +20,23 @@ STATIC_DIR = os.path.join(BASE_DIR, 'static')
 MEDIA_DIR = os.path.join(BASE_DIR, 'media')
 
 
+env = environ.Env(DEBUG=(bool, False))
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
-key = None
-with open(f'{BASE_DIR}/secret.key') as f:
-    key = f.read().strip()
-
-SECRET_KEY = key
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = ['aiverkeith.pythonanywhere.com']
+
+if DEBUG:
+    ALLOWED_HOSTS.append('*')
 
 # Application definition
 
@@ -100,7 +103,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-        'OPTIONS': { 'min_length': 6 }
+        'OPTIONS': {'min_length': 6}
     },
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
@@ -114,7 +117,6 @@ PASSWORD_HASHERS = (
     'django.contrib.auth.hashers.PBKDF2PasswordHasher',
     'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
 )
-
 
 
 # Internationalization
@@ -146,9 +148,11 @@ REGISTRATION_AUTO_LOGIN = True
 LOGIN_REDIRECT_URL = 'rango:index'
 LOGIN_URL = 'auth_login'
 
-CSRF_COOKIE_SECURE = True
-X_FRAME_OPTIONS = 'DENY'
-SESSION_COOKIE_SECURE = True
-SECURE_SSL_REDIRECT = True
-SECURE_BROWSER_XSS_FILTER = True
-SECURE_CONTENT_TYPE_NOSNIFF = True
+app_is_prod = DEBUG == False
+
+CSRF_COOKIE_SECURE = app_is_prod
+X_FRAME_OPTIONS = 'DENY' if app_is_prod else 'SAMEORIGIN'
+SESSION_COOKIE_SECURE = app_is_prod
+SECURE_SSL_REDIRECT = app_is_prod
+SECURE_BROWSER_XSS_FILTER = app_is_prod
+SECURE_CONTENT_TYPE_NOSNIFF = app_is_prod

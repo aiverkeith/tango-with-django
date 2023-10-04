@@ -13,7 +13,7 @@ isort==5.9.3
 lazy-object-proxy==1.6.0
 mccabe==0.6.1
 pep8==1.7.1
-Pillow==5.4.1
+Pillow==10.0.1
 platformdirs==2.3.0
 pycodestyle==2.7.0
 pycparser==2.20
